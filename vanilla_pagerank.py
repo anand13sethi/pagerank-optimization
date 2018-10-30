@@ -19,35 +19,26 @@ with open("1000_nodes.txt", 'r') as fopen:
 #         fout.write(item + " - " + " ".join(list_of_list[item]) + "\n")
 sum = 0
 d = 0.85
-for j in range (0,100):
+while True:
     for i in range(0, n+1):
-        # print(list_of_list[i])
         if i in list_of_list.keys():
-            # print(" i = " , i)
             for item in list_of_list[i]:
-                # print ("item = " ,item,rank[item],outdegree[item])
                 donation = rank[item]/outdegree[item]
-                # print (donation)
                 sum += donation
-                # rank[item] -= donation
         rank[i] = (1-d) + d*sum
-        # print("sum = ", sum);
         sum = 0
 
-    # for i in range(0,n+1):
-    #     rank[i] = new_rank[i]
+    x = 0
 
-    # print (j)
-    # [print(i) for i in new_rank]
+    for i in rank :
+        x += i
 
+    if round(x/(n+1),3) == 1:
+        break
+
+    
 
 [print(i) for i in rank]
 
-sum = 0
 
-for i in rank :
-    sum += i
-
-
-print ("sum =", sum)
-print(sum/(n+1))
+print("Average = ",x/(n+1))
