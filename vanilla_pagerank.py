@@ -19,7 +19,9 @@ with open("1000_nodes.txt", 'r') as fopen:
 #         fout.write(item + " - " + " ".join(list_of_list[item]) + "\n")
 sum = 0
 d = 0.85
+j = 0
 while True:
+    j +=1
     for i in range(0, n+1):
         if i in list_of_list.keys():
             for item in list_of_list[i]:
@@ -40,5 +42,5 @@ while True:
 
 [print(i) for i in rank]
 
-
+print("j = ",j);
 print("Average = ",x/(n+1))
