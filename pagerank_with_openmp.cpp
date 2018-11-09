@@ -5,7 +5,7 @@
 #include<string.h>
 #include<fstream>
 #include<cmath>
-#include<time.h>
+#include<sys/time.h>
 
 using namespace std;
 
@@ -13,6 +13,8 @@ int mat_mul(vector<vector<double> > M_mat, vector<double> &rank,int n)
 {
 	vector<double> new_rank(n,0);
 	long flag,a,b;
+
+	#pragma omp_set_num_threads(4);
 	#pragma omp parallel for schedule(static)
 	
 	for(int i=0;i<n;i++)
@@ -111,13 +113,15 @@ void calc_rank(long n)
 }
 
 int main()
-{	
-	clock_t start, end;
-    double cpu_time_used;
+{
+
 	long n = 1000;
-	start = clock();
-	calc_rank(n); 
-	end = clock();
-	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-	cout<<"\n\n Time = "<<cpu_time_used;
+	struct timeval start, end;
+	gettimeofday(&start, NULL);
+
+	calc_rank(n);
+
+	gettimeofday(&end, NULL);
+
+	cout<<"\n\n Time = "<< (((end.tv_sec  - start.tv_sec) * 1000000u + end.tv_usec - start.tv_usec) / 1.e6);
 }
