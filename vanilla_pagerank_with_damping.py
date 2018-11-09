@@ -1,10 +1,10 @@
-n = 999
+n = 4
 init_rank = 1/(n+1)
 list_of_list = {}
 outdegree = [0]*(n+1)
 rank = [init_rank]*(n+1)
 new_rank = [0]*(n+1)
-with open("1000_nodes.txt", 'r') as fopen:
+with open("5_nodes.txt", 'r') as fopen:
     for line in fopen:
         a, b = map(int, line.split())
         outdegree[a] += 1

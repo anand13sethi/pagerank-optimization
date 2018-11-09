@@ -52,19 +52,19 @@ void calc_rank(long n)
 		if(round(rank_average) == 1000)
 			break;
 	}
-	cout<<"No of iterations = "<<k<<"\n";
 
 	for(i=0;i<n;i++)
 	{
 		cout<<i<<" : "<<rank[i]<<"\n";
 	}
 	cout<<"Average = "<<rank_average/1000;
+	cout<<"No of iterations = "<<k<<"\n";
 
 
 }
 
 int main()
 {
-	long n = 1000;
+	long n = 5;
 	calc_rank(n); 
 }
