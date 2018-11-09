@@ -49,14 +49,14 @@ int mat_mul(vector<vector<double> > M_mat, vector<double> &rank,int n)
     return 0;
 }
 
-void calc_rank(long n)
+
+void calc_rank(long n, vector<double> &rank)
 {
     long in_node, out_node, node, weight, i, j, k;
     double sum,donation,init_rank,rank_sum,rank_average,damping_factor;
     damping_factor = 0.85;
     init_rank = 1/(double)n;
     vector<long>outdegree(n,0);
-    vector<double>rank(n,init_rank);
     vector<vector<double> > A_mat(n, vector<double>(n,0));
     vector<vector<double> > B_mat(n, vector<double>(n,init_rank));
     vector<vector<double> > M_mat(n, vector<double>(n,init_rank));
@@ -92,7 +92,6 @@ void calc_rank(long n)
         }
     }
 
-
     k = 0;
     while(1)
     {
@@ -102,23 +101,83 @@ void calc_rank(long n)
             break;
     }
     rank_sum = 0;
+
     for(i = 0 ; i < n ; i++)
     {
         rank_sum += rank[i];
-        cout<<rank[i] <<"\n";
+        cout<<i<<" "<<rank[i] <<"\n";
     }
     cout<<"rank_sum = "<<rank_sum<<"\n";
     cout<<k;
+
 }
+
+
+void traffic_prediction(int n, vector<double> importance_matrix, vector< vector<long> >adj_list, vector<long> &vehicle_count) {
+    int i, j;
+    long current_vehicle_count, vehicle_transfer_count;
+    double total_rank;
+
+    for (i = 0; i < adj_list.size(); i++) {
+        total_rank = 0;
+        for (j = 0; j < adj_list[i].size(); j++) {
+            total_rank += importance_matrix[adj_list[i][j]];
+        }
+        current_vehicle_count = vehicle_count[i];
+        for (j = 0; j < adj_list[i].size(); j++) {
+            vehicle_transfer_count = (importance_matrix[adj_list[i][j]] / total_rank) * current_vehicle_count;
+            vehicle_count[i] -= vehicle_transfer_count;
+            vehicle_count[adj_list[i][j]] += vehicle_transfer_count;
+        }
+    }
+
+
+    for (int k = 0; k < n ; ++k) {
+        cout<<k<<" "<<vehicle_count[k]<<"\n";
+    }
+}
+
 
 int main()
 {
 
-    long n = 25;
+    long n = 25, num_of_vehicles;
+    long in_node, out_node, node, weight,region;
+    int i;
+    double init_rank;
+    string file_name;
+    string str;
+    vector<vector<long> >adj_list(n);
     struct timeval start, end;
     gettimeofday(&start, NULL);
 
-    calc_rank(n);
+    init_rank = 1/(double)n;
+    vector<double> page_rank(n, init_rank);
+    vector<long> vehicle_count(n);
+
+    calc_rank(n, page_rank);
+
+    str = to_string(n);
+    file_name = str + "_regions.txt";
+    ifstream file_read;
+    file_read.open(file_name.c_str(), ios::in);
+    while(file_read>>out_node>>in_node>>weight){
+        adj_list[out_node].push_back(in_node);
+    }
+
+    file_read.close();
+
+    file_name = str + "_traffic.txt";
+    file_read.open(file_name, ios::in);
+    while(file_read>>region>>num_of_vehicles){
+        vehicle_count[region] = num_of_vehicles;
+    }
+
+    file_read.close();
+
+    for(i = 0; i < 5; i++){
+        traffic_prediction(n, page_rank, adj_list, vehicle_count);
+    }
 
     gettimeofday(&end, NULL);
 
