@@ -114,7 +114,7 @@ void calc_rank(long n)
 int main()
 {
 
-    long n = 9;
+    long n = 25;
     struct timeval start, end;
     gettimeofday(&start, NULL);
 

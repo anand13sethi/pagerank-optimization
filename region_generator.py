@@ -6,7 +6,7 @@ with open(str(n)+"_regions.txt", "w") as f:
     for i in range(n):
         # right
         if i < n-1 and (i+1) % m != 0:
-            x = random.randint(5, 50)
+            x = random.randint(5, 1000)
             f.write(str(i) + " " + str(i+1) + " " + str(x) + "\n")
         # left
         if i > 0 and i % m != 0:
