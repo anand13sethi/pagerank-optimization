@@ -12,19 +12,21 @@ using namespace std;
 int mat_mul(vector<vector<double> > M_mat, vector<double> &rank,int n)
 {
 	vector<double> new_rank(n,0);
-	long flag,a,b;
-	#pragma omp parallel for schedule(static)
-	
-	for(int i=0;i<n;i++)
-	{
-		double temp = 0;
-		for(int j =0;j<n;j++)
+	double temp;
+	long flag,a,b,j;
+	#pragma omp parallel shared(new_rank) private(j,temp)
+	{	
+		#pragma omp for schedule (static)
+		for(int i=0;i<n;i++)
 		{
-			temp += M_mat[i][j]*rank[j];
+			temp = 0;
+			for(j =0;j<n;j++)
+			{
+				temp += M_mat[i][j]*rank[j];
+			}
+			new_rank[i] = temp;
 		}
-		new_rank[i] = temp;
 	}
-
 	flag = 0;
 	for(int i=0;i<n;i++)
 	{	
@@ -49,8 +51,8 @@ int mat_mul(vector<vector<double> > M_mat, vector<double> &rank,int n)
 
 void calc_rank(long n)
 {
-	long in_node,out_node,node,i,j,k;
-	double sum,donation,init_rank,rank_sum,rank_average,damping_factor;
+	long in_node,out_node,i,j,k;
+	double init_rank,rank_sum,damping_factor;
 	damping_factor = 0.85;
 	init_rank = 1/(double)n;
 	vector<long>outdegree(n,0);

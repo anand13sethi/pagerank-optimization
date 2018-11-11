@@ -85,15 +85,6 @@ void calc_rank(long n)
 			M_mat[i][j] = (damping_factor * A_mat[i][j]) + ((1 - damping_factor) * B_mat[i][j]);
 		}
 	}
-	// for(i=0;i<n;i++)
-	// {
-	// 	for(j=0;j<n;j++)
-	// 	{
-	// 		cout<<M_mat[i][j]<<" ";
-	// 	}
-	// 	cout<<"\n";
-	// }
-
 	k = 0;
 	while(1)
 	{	
@@ -110,35 +101,8 @@ void calc_rank(long n)
 	}
 	cout<<"rank_sum = "<<rank_sum<<"\n";
 	cout<<k;
-	// damping_factor = 0.85;
-	// for(k = 1 ; k >0 ; k++)
-	// {
-	// 	rank_sum = 0;
-	// 	for(i = 0;i<n;i++)
-	// 	{
-	// 		sum = 0;
-	// 		for(j = 0;j<mymap[i].size();j++)
-	// 		{
-	// 			node = mymap[i][j];
-	// 			donation = rank[node]/outdegree[node];
-	// 			sum += donation; 
-	// 		}
-	// 		rank[i] = (1-damping_factor) + damping_factor*sum;
-	// 		rank_sum += rank[i];
-	// 	}
-	// 	rank_average = rank_sum/n;
-	// 	rank_average = rank_average*1000;
-	// 	if(round(rank_average) == 1000)
-	// 		break;
-	// }
-	// cout<<"No of iterations = "<<k<<"\n";
-
-	// for(i=0;i<n;i++)
-	// {
-	// 	cout<<i<<" : "<<rank[i]<<"\n";
-	// }
-	// cout<<"Average = "<<rank_average/1000;
-	}
+	
+}
 
 int main()
 {
