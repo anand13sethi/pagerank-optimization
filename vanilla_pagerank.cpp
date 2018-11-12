@@ -5,6 +5,7 @@
 #include<string.h>
 #include<fstream>
 #include<cmath>
+#include<omp.h>
 
 using namespace std;
 
@@ -65,6 +66,12 @@ void calc_rank(long n)
 
 int main()
 {
-	long n = 5;
+	double t1, t2;
+    double cpu_time_used;
+	long n = 500;
+	t1 = omp_get_wtime();
 	calc_rank(n); 
+	t2 = omp_get_wtime();
+	cpu_time_used = t2-t1;
+	cout<<"\n\n Time = "<<cpu_time_used;
 }

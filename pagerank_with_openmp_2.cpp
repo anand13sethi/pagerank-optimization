@@ -6,6 +6,7 @@
 #include<fstream>
 #include<cmath>
 #include<time.h>
+#include<omp.h>
 
 using namespace std;
 
@@ -13,7 +14,7 @@ int mat_mul(vector<vector<double> > M_mat, vector<double> &rank,int n)
 {
 	vector<double> new_rank(n,0);
 	long flag,a,b;
-	#pragma omp parallel for schedule(static)
+	#pragma omp parallel for
 	
 	for(int i=0;i<n;i++)
 	{
@@ -112,12 +113,12 @@ void calc_rank(long n)
 
 int main()
 {	
-	clock_t start, end;
+	double t1, t2;
     double cpu_time_used;
-	long n = 1000;
-	start = clock();
+	long n = 500;
+	t1 = omp_get_wtime();
 	calc_rank(n); 
-	end = clock();
-	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+	t2 = omp_get_wtime();
+	cpu_time_used = t2-t1;
 	cout<<"\n\n Time = "<<cpu_time_used;
 }

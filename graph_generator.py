@@ -1,10 +1,10 @@
 import random
 
-no_of_nodes = 10000
-no_of_edges = 499500
+no_of_nodes = 500
+no_of_edges = 499*250
 
 
-with open("10000_nodes.txt", 'w') as fopen:
+with open("100_nodes.txt", 'w') as fopen:
     for i in range(0, no_of_edges):
         a = random.randint(0, no_of_nodes-1)
         b = random.randint(0, no_of_nodes-1)
